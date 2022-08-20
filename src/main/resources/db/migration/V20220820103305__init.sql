@@ -15,6 +15,8 @@ CREATE TABLE users
     password varchar not null
 );
 
+INSERT INTO users(login, password) VALUES ('admin', '$2a$10$XtxHk1OfzjW.JFDVokW8vOunOpL0beyB9DW6ROnaXszLQAm46ON02');
+
 CREATE TABLE clients
 (
     id serial primary key,

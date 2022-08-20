@@ -5,7 +5,6 @@ spring:
     username: postgres
     password: admin
 
-
 flyway:
   url: jdbc:postgresql://localhost:5432/postgres
   user: postgres

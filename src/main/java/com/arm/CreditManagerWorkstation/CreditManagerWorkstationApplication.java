@@ -9,5 +9,4 @@ public class CreditManagerWorkstationApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CreditManagerWorkstationApplication.class, args);
 	}
-
 }
