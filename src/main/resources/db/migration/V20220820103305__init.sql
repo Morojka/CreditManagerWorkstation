@@ -1,6 +1,6 @@
 CREATE TABLE types
 (
-    id bigint primary key,
+    id serial primary key,
     name varchar unique not null,
     type varchar not null
 );
@@ -10,14 +10,14 @@ INSERT INTO types(name, type) VALUES ('Холост/Не замужем', 'MARIT
 
 CREATE TABLE users
 (
-    id bigint primary key,
+    id serial primary key,
     login varchar unique not null,
     password varchar not null
 );
 
 CREATE TABLE clients
 (
-    id bigint primary key,
+    id serial primary key,
     first_name varchar not null,
     last_name varchar not null,
     patronymic varchar,
@@ -33,7 +33,7 @@ CREATE TABLE clients
 
 CREATE TABLE requests
 (
-    id bigint primary key,
+    id serial primary key,
     client_id bigint not null,
 
     CONSTRAINT fk_request_client FOREIGN KEY(client_id) REFERENCES clients(id)
@@ -41,7 +41,7 @@ CREATE TABLE requests
 
 CREATE TABLE solutions
 (
-    id bigint primary key,
+    id serial primary key,
     request_id bigint not null,
     approved boolean default false,
     days_amount int not null,
