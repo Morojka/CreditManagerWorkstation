@@ -1,4 +1,4 @@
-package com.arm.CreditManagerWorkstation.controller.service;
+package com.arm.CreditManagerWorkstation.service;
 
 import com.arm.CreditManagerWorkstation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
