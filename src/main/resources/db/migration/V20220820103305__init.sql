@@ -12,14 +12,16 @@ CREATE TABLE users
 (
     id serial primary key,
     login varchar unique not null,
-    password varchar not null
+    password varchar not null,
+    type varchar not null default 'USER'
 );
 
-INSERT INTO users(login, password) VALUES ('admin', '$2a$12$WySyoao2PW6BoF9Z.01VJObcfcYqvZim60pEtSqf6w52JFUQO.kAi');
+INSERT INTO users(login, password, type) VALUES ('admin', '$2a$12$WySyoao2PW6BoF9Z.01VJObcfcYqvZim60pEtSqf6w52JFUQO.kAi', 'ADMIN');
 
 CREATE TABLE requests
 (
     id serial primary key,
+    user_id bigint not null,
     first_name varchar not null,
     last_name varchar not null,
     patronymic varchar,
@@ -30,7 +32,8 @@ CREATE TABLE requests
     employment_status text not null,
     wish_credit_amount int not null,
 
-    CONSTRAINT fk_client_marital_status FOREIGN KEY(marital_status_id) REFERENCES types(id)
+    CONSTRAINT fk_request_user FOREIGN KEY(user_id) REFERENCES users(id),
+    CONSTRAINT fk_request_marital_status FOREIGN KEY(marital_status_id) REFERENCES types(id)
 );
 
 CREATE TABLE solutions

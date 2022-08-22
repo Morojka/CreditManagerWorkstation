@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head"></head>
+<body>
+    <div class="container">
+        <div th:replace="header :: header"></div>
+    </div>
+    <div class="container mt-5">
+        <div class="alert alert-success">Успешно</div>
+        <div>
+            <p th:text="${'Ваш логин: ' + login}"></p>
+            <p th:text="${'Ваш пароль: ' + password}"></p>
+        </div>
+        <a class="btn btn-lg btn-outline-success" th:href="${'/request/' + request.id}">Просмотр заявки</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="head :: head"></head>
+<body>
+    <div class="container">
+        <div th:replace="header :: header"></div>
+    </div>
+    <div class="container mt-5 px-5">
+        <p class="form-control-plaintext py-1" th:text="${'Фамилия: ' + request.last_name}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Имя: ' + request.first_name}"></p>
+        <p class="form-control-plaintext py-0" th:if="${request.patronymic}" th:text="${'Отчество: ' + request.patronymic}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Паспортные данные: ' + request.passport}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Семейное положение: ' + request.marital_status.getName()}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Адрес проживания: ' + request.address}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Номер телефона: ' + request.phone_number}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Данные о трудоустройстве: ' + request.employment_status}"></p>
+        <p class="form-control-plaintext py-0" th:text="${'Желаемая сумма кредита: ' + request.wish_credit_amount}"></p>
+    </div>
+</body>
+</html>

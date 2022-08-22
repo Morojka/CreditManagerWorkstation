@@ -7,21 +7,31 @@
     </div>
     <div class="container mt-5">
         <form style="max-width: 400px" class="form-signin mx-auto" name="request-form"
-              th:object="${request}" th:action="@{/create-request-post}" th:method="post" method="post">
+              th:object="${request}" th:action="@{/create-request}" th:method="post" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Заявка на кредит</h1>
-            <input type="text" th:field="*{first_name}" name="firstName" id="firstName" class="form-control my-2" placeholder="Имя" required="" autofocus="">
-            <input type="text" th:field="*{last_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Фамилия" required="">
+            <p class="form-control-plaintext py-0">Фамилия</p>
+            <input type="text" th:field="*{last_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Фамилия" required="" autofocus="">
+            <p class="form-control-plaintext py-0">Имя</p>
+            <input type="text" th:field="*{first_name}" name="firstName" id="firstName" class="form-control my-2" placeholder="Имя" required="">
+            <p class="form-control-plaintext py-0">Отчество</p>
             <input type="text" th:field="*{patronymic}" name="patronymic" id="patronymic" class="form-control my-2" placeholder="Отчество">
+            <p class="form-control-plaintext py-0">Паспортные данные</p>
             <input type="text" th:field="*{passport}" name="passport" id="passport" class="form-control my-2" placeholder="Паспортные данные" required="">
+            <p class="form-control-plaintext py-0">Семейное положение</p>
             <select required="" th:field="*{marital_status.id}" name="maritalStatus" class="form-control">
                 <th:block th:each="type: ${types}">
                     <option th:value="${type.id}" th:text="${type.name}"></option>
                 </th:block>
             </select>
+            <p class="form-control-plaintext py-0">Адрес проживания</p>
             <input type="text" th:field="*{address}" name="address" id="address" class="form-control my-2" placeholder="Адрес" required="">
+            <p class="form-control-plaintext py-0">Номер телефона</p>
             <input type="text" th:field="*{phone_number}" name="phoneNumber" id="phoneNumber" class="form-control my-2" placeholder="Номер телефона" required="">
+            <p class="form-control-plaintext py-0">Данные о трудоустройстве</p>
             <textarea th:field="*{employment_status}" name="employmentStatus" id="employmentStatus" class="form-control my-2" required="" placeholder="Введите данные о своем трудоустройстве..."></textarea>
-            <input type="number" th:field="*{wish_credit_amount}" name="wishCreditAmount" id="wishCreditAmount" min="0" class="form-control my-2" placeholder="Желаемая сумма кредита в рублях" required="">
+            <p class="form-control-plaintext py-0">Желаемая сумма кредита</p>
+            <input type="number" min="1" th:field="*{wish_credit_amount}" name="wishCreditAmount" id="wishCreditAmount" class="form-control my-2" placeholder="Желаемая сумма кредита в рублях" required="">
+            <p class="form-control-plaintext py-0 text-danger" th:if="${#fields.hasAnyErrors()}">При заполнении заявки была допущена ошибка, проверьте все и попробуйте снова.</p>
             <button class="btn btn-lg btn-success btn-block my-2" type="submit">Отправить</button>
         </form>
     </div>

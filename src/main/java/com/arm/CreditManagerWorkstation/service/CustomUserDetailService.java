@@ -1,4 +1,4 @@
-package com.arm.CreditManagerWorkstation.controller.service;
+package com.arm.CreditManagerWorkstation.service;
 
 import com.arm.CreditManagerWorkstation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,6 @@ public class CustomUserDetailService implements UserDetailsService {
 
         return User.withUsername(customer.getLogin())
                 .password(customer.getPassword())
-                .authorities("USER").build();
+                .authorities(customer.getType()).build();
     }
 }
