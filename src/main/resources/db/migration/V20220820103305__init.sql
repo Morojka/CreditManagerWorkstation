@@ -40,11 +40,11 @@ CREATE TABLE solutions
 (
     id serial primary key,
     request_id bigint not null,
-    approved boolean default false,
-    days_amount int not null,
-    credit_amount int not null,
+    approved boolean default null,
+    days_amount int default null,
+    credit_amount int default null,
     sign_date date default null,
-    signed boolean default false,
+    signed boolean default null,
 
     CONSTRAINT fk_solution_request FOREIGN KEY(request_id) REFERENCES requests(id)
 );

@@ -1,9 +1,11 @@
 package com.arm.CreditManagerWorkstation.controller;
 
 import com.arm.CreditManagerWorkstation.model.Request;
+import com.arm.CreditManagerWorkstation.model.Solution;
 import com.arm.CreditManagerWorkstation.model.Type;
 import com.arm.CreditManagerWorkstation.model.User;
 import com.arm.CreditManagerWorkstation.repository.RequestRepository;
+import com.arm.CreditManagerWorkstation.repository.SolutionRepository;
 import com.arm.CreditManagerWorkstation.repository.TypeRepository;
 import com.arm.CreditManagerWorkstation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class RequestController {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    SolutionRepository solutionRepository;
+    @Autowired
     DaoAuthenticationProvider authenticationProvider;
 
     private List<Type> getTypes() {
@@ -55,7 +59,7 @@ public class RequestController {
 
         Request request = requestRepository.findById(requestId);
 
-        if(request != null && Objects.equals(request.getUser().getLogin(), userName)) {
+        if(request != null && (Objects.equals(request.getUser().getLogin(), userName) || userRepository.hasAuthority(auth, "ADMIN"))) {
             model.addAttribute("request", request);
             return new ModelAndView("request-view");
         }
@@ -79,6 +83,7 @@ public class RequestController {
             model.addAttribute("types", getTypes());
             return new ModelAndView("request-creation");
         } else {
+            //creating new User instance, saving to DB and logging it in.
             User newUser = new User();
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -96,11 +101,18 @@ public class RequestController {
             SecurityContext sc = SecurityContextHolder.getContext();
             sc.setAuthentication(auth);
 
+            //saving Request instance in DB
+            requestRepository.save(request);
+
+            //creating new Solution instance and saving to DB.
+            Solution solution = new Solution();
+            solution.setRequest(request);
+            solutionRepository.save(solution);
+
             model.addAttribute("login", login);
             model.addAttribute("password", password);
             model.addAttribute("request", request);
 
-            requestRepository.save(request);
             return new ModelAndView("request-success");
         }
     }

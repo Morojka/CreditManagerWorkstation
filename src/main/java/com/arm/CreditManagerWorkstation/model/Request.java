@@ -1,16 +1,12 @@
 package com.arm.CreditManagerWorkstation.model;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "requests")
 public class Request {
@@ -38,5 +34,9 @@ public class Request {
     private String employment_status;
     @Min(1)
     private Integer wish_credit_amount;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private Solution solution;
 
 }
