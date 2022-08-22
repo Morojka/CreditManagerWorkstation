@@ -40,7 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
-                .deleteCookies("JSESSIONID");
+                .deleteCookies("JSESSIONID")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/create-request")
+                .not().hasAuthority("ADMIN")
+        ;
     }
 
     @Override

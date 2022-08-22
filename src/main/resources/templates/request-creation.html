@@ -10,9 +10,9 @@
               th:object="${request}" th:action="@{/create-request}" th:method="post" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Заявка на кредит</h1>
             <p class="form-control-plaintext py-0">Фамилия</p>
-            <input type="text" th:field="*{last_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Фамилия" required="">
+            <input type="text" th:field="*{last_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Фамилия" required="" autofocus="">
             <p class="form-control-plaintext py-0">Имя</p>
-            <input type="text" th:field="*{first_name}" name="firstName" id="firstName" class="form-control my-2" placeholder="Имя" required="" autofocus="">
+            <input type="text" th:field="*{first_name}" name="firstName" id="firstName" class="form-control my-2" placeholder="Имя" required="">
             <p class="form-control-plaintext py-0">Отчество</p>
             <input type="text" th:field="*{patronymic}" name="patronymic" id="patronymic" class="form-control my-2" placeholder="Отчество">
             <p class="form-control-plaintext py-0">Паспортные данные</p>

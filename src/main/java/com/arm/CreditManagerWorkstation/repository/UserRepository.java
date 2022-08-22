@@ -20,4 +20,10 @@ public class UserRepository {
         Session session = entityManager.unwrap(Session.class);
         return session.getSession().createQuery("FROM User where login = :query", User.class).setParameter("query", query).getSingleResult();
     }
+
+    @Transactional
+    public void save(User user) {
+        Session session = entityManager.unwrap(Session.class);
+        session.getSession().save(user);
+    }
 }
