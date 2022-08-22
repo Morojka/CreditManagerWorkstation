@@ -1,10 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <body>
-        <div th:fragment="header">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a sec:authorize="!isAuthenticated()" th:href="@{'/login'}" class="btn btn-outline-primary my-2 my-sm-0 ml-auto">Войти</a>
-                <a sec:authorize="isAuthenticated()" th:href="@{'/logout'}" class="btn btn-outline-danger my-2 my-sm-0 ml-auto">Выйти</a>
-            </nav>
-        </div>
-    </body>
-</html>
+<nav th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a sec:authorize="!isAuthenticated()" th:href="@{'/login'}" class="btn btn-outline-primary my-2 my-sm-0 ml-auto">Войти</a>
+    <form class="ml-auto" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-outline-danger my-2 my-sm-0 ml-auto">Выйти</button>
+    </form>
+</nav>

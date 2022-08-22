@@ -1,10 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="head :: head"></div>
+<head th:replace="head :: head"></head>
 <body>
-<div class="container">
-    <div th:replace="header :: header"></div>
-
-</div>
+    <div class="container">
+        <div th:replace="header :: header"></div>
+    </div>
+    <div class="container mt-5">
+        <form style="max-width: 400px" class="form-signin mx-auto" name="request-form"
+              th:object="${request}" th:action="@{/create-request-post}" th:method="post" method="post">
+            <h1 class="h3 mb-3 font-weight-normal">Заявка на кредит</h1>
+            <input type="text" th:field="*{first_name}" name="firstName" id="firstName" class="form-control my-2" placeholder="Имя" required="" autofocus="">
+            <input type="text" th:field="*{last_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Фамилия" required="">
+            <input type="text" th:field="*{patronymic}" name="patronymic" id="patronymic" class="form-control my-2" placeholder="Отчество">
+            <input type="text" th:field="*{passport}" name="passport" id="passport" class="form-control my-2" placeholder="Паспортные данные" required="">
+            <select required="" th:field="*{marital_status.id}" name="maritalStatus" class="form-control">
+                <th:block th:each="type: ${types}">
+                    <option th:value="${type.id}" th:text="${type.name}"></option>
+                </th:block>
+            </select>
+            <input type="text" th:field="*{address}" name="address" id="address" class="form-control my-2" placeholder="Адрес" required="">
+            <input type="text" th:field="*{phone_number}" name="phoneNumber" id="phoneNumber" class="form-control my-2" placeholder="Номер телефона" required="">
+            <textarea th:field="*{employment_status}" name="employmentStatus" id="employmentStatus" class="form-control my-2" required="" placeholder="Введите данные о своем трудоустройстве..."></textarea>
+            <input type="number" th:field="*{wish_credit_amount}" name="wishCreditAmount" id="wishCreditAmount" min="0" class="form-control my-2" placeholder="Желаемая сумма кредита в рублях" required="">
+            <button class="btn btn-lg btn-success btn-block my-2" type="submit">Отправить</button>
+        </form>
+    </div>
 </body>
 </html>

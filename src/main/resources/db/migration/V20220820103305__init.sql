@@ -15,9 +15,9 @@ CREATE TABLE users
     password varchar not null
 );
 
-INSERT INTO users(login, password) VALUES ('admin', '$2a$10$XtxHk1OfzjW.JFDVokW8vOunOpL0beyB9DW6ROnaXszLQAm46ON02');
+INSERT INTO users(login, password) VALUES ('admin', '$2a$12$WySyoao2PW6BoF9Z.01VJObcfcYqvZim60pEtSqf6w52JFUQO.kAi');
 
-CREATE TABLE clients
+CREATE TABLE requests
 (
     id serial primary key,
     first_name varchar not null,
@@ -31,14 +31,6 @@ CREATE TABLE clients
     wish_credit_amount int not null,
 
     CONSTRAINT fk_client_marital_status FOREIGN KEY(marital_status_id) REFERENCES types(id)
-);
-
-CREATE TABLE requests
-(
-    id serial primary key,
-    client_id bigint not null,
-
-    CONSTRAINT fk_request_client FOREIGN KEY(client_id) REFERENCES clients(id)
 );
 
 CREATE TABLE solutions
