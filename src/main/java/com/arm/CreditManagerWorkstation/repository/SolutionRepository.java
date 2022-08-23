@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 @Repository
 public class SolutionRepository {
@@ -29,8 +30,15 @@ public class SolutionRepository {
         session.getSession().save(solution);
     }
 
-    public Solution findById(@Param("id") Long query) {
+    @Transactional
+    public void update(Solution solution) {
         Session session = entityManager.unwrap(Session.class);
-        return session.getSession().createQuery("FROM Solution where id = :query", Solution.class).setParameter("query", query).getSingleResult();
+        session.getSession().persist(solution);
+        session.getSession().update(solution);
+    }
+
+    public Solution findById(@Param("id") Long id) {
+        Session session = entityManager.unwrap(Session.class);
+        return session.getSession().createQuery("FROM Solution where id = :query", Solution.class).setParameter("query", id).getSingleResult();
     }
 }

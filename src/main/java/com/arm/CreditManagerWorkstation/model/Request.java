@@ -2,6 +2,8 @@ package com.arm.CreditManagerWorkstation.model;
 
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -36,6 +38,7 @@ public class Request {
     private Integer wish_credit_amount;
 
     @OneToOne(mappedBy = "request")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Solution solution;
 
     public String getFullName() {

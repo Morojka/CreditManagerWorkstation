@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -48,12 +49,12 @@ public class RequestController {
     }
 
     @GetMapping("/request/{requestId}")
-    public ModelAndView showCreateRequestForm (@PathVariable Long requestId, Model model) {
+    public ModelAndView showRequest (@PathVariable Long requestId, Model model) {
         SecurityContext sc = SecurityContextHolder.getContext();
         Authentication auth = sc.getAuthentication();
 
         if(auth.getPrincipal() == "anonymousUser") {
-            return new ModelAndView("index");
+            return new ModelAndView("redirect:/");
         }
         String userName = auth.getName();
 
@@ -64,7 +65,7 @@ public class RequestController {
             return new ModelAndView("request-view");
         }
 
-        return new ModelAndView("index");
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/create-request")
@@ -115,6 +116,28 @@ public class RequestController {
 
             return new ModelAndView("request-success");
         }
+    }
+
+    @RequestMapping(value = "/sign-request/{requestId}", method=RequestMethod.POST)
+    public ModelAndView signRequest(@PathVariable Long requestId) {
+        SecurityContext sc = SecurityContextHolder.getContext();
+        Authentication auth = sc.getAuthentication();
+
+        if(auth.getPrincipal() == "anonymousUser") {
+            return new ModelAndView("redirect:/");
+        }
+        String userName = auth.getName();
+
+        Request request = requestRepository.findById(requestId);
+        Solution solution = solutionRepository.findById(request.getSolution().getId());
+
+        if(solution != null && Objects.equals(request.getUser().getLogin(), userName)) {
+//            System.out.println(solution);
+            solution.setSign_date(new Date(System.currentTimeMillis()));
+            solution.setSigned(Boolean.TRUE);
+            solutionRepository.update(solution);
+        }
+        return new ModelAndView("redirect:/request/" + requestId);
     }
 
     @GetMapping("/admin/requests")

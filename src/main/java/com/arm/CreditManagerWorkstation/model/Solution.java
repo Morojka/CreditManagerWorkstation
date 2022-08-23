@@ -1,6 +1,9 @@
 package com.arm.CreditManagerWorkstation.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -16,6 +19,7 @@ public class Solution {
     private Long id;
     @NotNull
     @OneToOne
+    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "request_id")
     private Request request;
     private Boolean approved;

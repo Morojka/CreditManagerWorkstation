@@ -26,9 +26,12 @@
                     <p class="form-control-plaintext alert alert-success mt-3"
                        th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"/>
                 </th:block>
-                <p class="form-control-plaintext py-0"
-                   th:if="${request.solution.sign_date == null || request.solution.signed == null || #bools.isFalse(request.solution.signed)}">Кредитный договор еще не подписан.</p>
-                <a sec:authorize="hasAuthority('USER')" href="">Подписать кредитный договор</a>
+                <th:block th:if="${request.solution.sign_date == null || request.solution.signed == null || #bools.isFalse(request.solution.signed)}">
+                    <p class="form-control-plaintext py-0">Кредитный договор еще не подписан.</p>
+                    <form  sec:authorize="hasAuthority('USER')" th:action="${'/sign-request/' + request.id}" th:method="post">
+                        <button class="btn btn-outline-success"  type="submit">Подписать кредитный договор</button>
+                    </form>
+                </th:block>
             </th:block>
             <p class="form-control-plaintext text-danger py-0" th:if="${#bools.isFalse(request.solution.approved)}">
                 Заявка не одобрена.
