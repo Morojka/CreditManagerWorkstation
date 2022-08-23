@@ -7,6 +7,9 @@ CREATE TABLE types
 
 INSERT INTO types(name, type) VALUES ('Женат/Замужем', 'MARITAL_STATUS');
 INSERT INTO types(name, type) VALUES ('Холост/Не замужем', 'MARITAL_STATUS');
+INSERT INTO types(name, type) VALUES ('Ф.И.О.', 'SEARCH_TYPE');
+INSERT INTO types(name, type) VALUES ('Паспорт', 'SEARCH_TYPE');
+INSERT INTO types(name, type) VALUES ('Телефон', 'SEARCH_TYPE');
 
 CREATE TABLE users
 (
@@ -22,9 +25,7 @@ CREATE TABLE requests
 (
     id serial primary key,
     user_id bigint not null,
-    first_name varchar not null,
-    last_name varchar not null,
-    patronymic varchar,
+    full_name varchar not null,
     passport varchar not null,
     marital_status_id bigint not null,
     address varchar not null,

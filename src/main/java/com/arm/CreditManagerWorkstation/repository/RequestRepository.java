@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -21,6 +22,31 @@ public class RequestRepository {
     public Request findById(@Param("id") Long query) {
         Session session = entityManager.unwrap(Session.class);
         return session.getSession().createQuery("FROM Request where id = :query", Request.class).setParameter("query", query).getSingleResult();
+    }
+
+    @Transactional
+    public List<Request> searchByName(String search) {
+        Session session = entityManager.unwrap(Session.class);
+        String query = "%" + search + "%";
+        return session.getSession().createQuery("SELECT r FROM Request r where r.full_name LIKE :query", Request.class)
+                .setParameter("query", query)
+                .getResultList();
+    }
+    @Transactional
+    public List<Request> searchByPassport(String search) {
+        Session session = entityManager.unwrap(Session.class);
+        String query = "%" + search + "%";
+        return session.getSession().createQuery("SELECT r FROM Request r where r.passport LIKE :query", Request.class)
+                .setParameter("query", query)
+                .getResultList();
+    }
+    @Transactional
+    public List<Request> searchByPhone(String search) {
+        Session session = entityManager.unwrap(Session.class);
+        String query = "%" + search + "%";
+        return session.getSession().createQuery("SELECT r FROM Request r where r.phone_number LIKE :query", Request.class)
+                .setParameter("query", query)
+                .getResultList();
     }
 
     public List<Request> getAll() {

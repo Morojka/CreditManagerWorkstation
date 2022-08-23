@@ -39,8 +39,8 @@ public class RequestController {
     @Autowired
     DaoAuthenticationProvider authenticationProvider;
 
-    private List<Type> getTypes() {
-        return typeRepository.findByType("MARITAL_STATUS");
+    private List<Type> getTypes(String type) {
+        return typeRepository.findByType(type);
     }
 
     private String generateRandomString() {
@@ -48,32 +48,12 @@ public class RequestController {
         return randomUUID.toString().replaceAll("_", "").replaceAll("-", "");
     }
 
-    @GetMapping("/request/{requestId}")
-    public ModelAndView showRequest (@PathVariable Long requestId, Model model) {
-        SecurityContext sc = SecurityContextHolder.getContext();
-        Authentication auth = sc.getAuthentication();
-
-        if(auth.getPrincipal() == "anonymousUser") {
-            return new ModelAndView("redirect:/");
-        }
-        String userName = auth.getName();
-
-        Request request = requestRepository.findById(requestId);
-
-        if(request != null && (Objects.equals(request.getUser().getLogin(), userName) || userRepository.hasAuthority(auth, "ADMIN"))) {
-            model.addAttribute("request", request);
-            return new ModelAndView("request-view");
-        }
-
-        return new ModelAndView("redirect:/");
-    }
-
     @GetMapping("/create-request")
     public ModelAndView showCreateRequestForm (Model model) {
         Request request = new Request();
         request.setUser(new User());
         request.setMarital_status(new Type());
-        model.addAttribute("types", getTypes());
+        model.addAttribute("types", getTypes("MARITAL_STATUS"));
         model.addAttribute("request", request);
         return new ModelAndView("request-creation");
     }
@@ -81,7 +61,7 @@ public class RequestController {
     @RequestMapping(value = "/create-request", method=RequestMethod.POST)
     public ModelAndView processForm(@ModelAttribute(value="request") @Validated Request request, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("types", getTypes());
+            model.addAttribute("types", getTypes("MARITAL_STATUS"));
             return new ModelAndView("request-creation");
         } else {
             //creating new User instance, saving to DB and logging it in.
@@ -118,6 +98,26 @@ public class RequestController {
         }
     }
 
+    @GetMapping("/request/{requestId}")
+    public ModelAndView showRequest (@PathVariable Long requestId, Model model) {
+        SecurityContext sc = SecurityContextHolder.getContext();
+        Authentication auth = sc.getAuthentication();
+
+        if(auth.getPrincipal() == "anonymousUser") {
+            return new ModelAndView("redirect:/");
+        }
+        String userName = auth.getName();
+
+        Request request = requestRepository.findById(requestId);
+
+        if(request != null && (Objects.equals(request.getUser().getLogin(), userName) || userRepository.hasAuthority(auth, "ADMIN"))) {
+            model.addAttribute("request", request);
+            return new ModelAndView("request-view");
+        }
+
+        return new ModelAndView("redirect:/");
+    }
+
     @RequestMapping(value = "/sign-request/{requestId}", method=RequestMethod.POST)
     public ModelAndView signRequest(@PathVariable Long requestId) {
         SecurityContext sc = SecurityContextHolder.getContext();
@@ -146,5 +146,37 @@ public class RequestController {
 
         model.addAttribute("requests", requests);
         return new ModelAndView("admin/requests");
+    }
+
+    @GetMapping("/admin/clients")
+    public ModelAndView showClients(Model model) {
+        List<Request> requests = requestRepository.getAll();
+        model.addAttribute("requests", requests);
+        model.addAttribute("types", getTypes("SEARCH_TYPE"));
+        return new ModelAndView("admin/clients");
+    }
+
+    @GetMapping("/admin/clients/search")
+    public ModelAndView showSearchClients(@RequestParam String query, @RequestParam Long searchTypeId, Model model) {
+        List<Request> requests = requestRepository.getAll();
+        List<Type> searchTypes = getTypes("SEARCH_TYPE");
+        model.addAttribute("types", searchTypes);
+
+        Type searchType = searchTypes.stream().filter(type -> type.getId().equals(searchTypeId)).findAny().orElse(null);
+        if(searchType == null) {
+            model.addAttribute("requests", requests);
+            return new ModelAndView("redirect:/admin/clients");
+        }
+
+        switch (searchType.getName()) {
+            case "Ф.И.О." -> requests = requestRepository.searchByName(query);
+            case "Паспорт" -> requests = requestRepository.searchByPassport(query);
+            case "Телефон" -> requests = requestRepository.searchByPhone(query);
+        }
+
+        model.addAttribute("prevType", searchTypeId);
+        model.addAttribute("prevQuery", query);
+        model.addAttribute("requests", requests);
+        return new ModelAndView("admin/clients");
     }
 }

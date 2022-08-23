@@ -20,10 +20,7 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
     @NotNull
-    private String first_name;
-    @NotNull
-    private String last_name;
-    private String patronymic;
+    private String full_name;
     @NotNull
     private String passport;
     @ManyToOne
@@ -41,9 +38,4 @@ public class Request {
     @OneToOne(mappedBy = "request")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Solution solution;
-
-    public String getFullName() {
-        return this.last_name + " " + this.first_name + " " + this.patronymic;
-    }
-
 }

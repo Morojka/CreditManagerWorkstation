@@ -9,12 +9,8 @@
         <form style="max-width: 400px" class="form-signin mx-auto" name="request-form"
               th:object="${request}" th:action="@{/create-request}" th:method="post" method="post">
             <h1 class="h3 mb-3 font-weight-normal">Заявка на кредит</h1>
-            <p class="form-control-plaintext py-0">Фамилия</p>
-            <input type="text" th:field="*{last_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Фамилия" required="" autofocus="">
-            <p class="form-control-plaintext py-0">Имя</p>
-            <input type="text" th:field="*{first_name}" name="firstName" id="firstName" class="form-control my-2" placeholder="Имя" required="">
-            <p class="form-control-plaintext py-0">Отчество</p>
-            <input type="text" th:field="*{patronymic}" name="patronymic" id="patronymic" class="form-control my-2" placeholder="Отчество">
+            <p class="form-control-plaintext py-0">Ф.И.О.</p>
+            <input type="text" th:field="*{full_name}" name="lastName" id="lastName" class="form-control my-2" placeholder="Ф.И.О." required="" autofocus="">
             <p class="form-control-plaintext py-0">Паспортные данные</p>
             <input type="text" th:field="*{passport}" name="passport" id="passport" class="form-control my-2" placeholder="Паспортные данные" required="">
             <p class="form-control-plaintext py-0">Семейное положение</p>

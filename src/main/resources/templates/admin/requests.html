@@ -7,7 +7,9 @@
 </div>
 <div class="container mt-5 text-center">
     <div class="row my-2" th:each="request: ${requests}">
-        <div th:text="${request.getFullName()}" class="col-7 text-center"></div>
+        <div th:text="${request.full_name}" class="col-auto text-center border-right"></div>
+        <div th:text="${request.passport}" class="col-auto text-center border-right"></div>
+        <div th:text="${request.phone_number}" class="col-auto text-center border-right"></div>
         <div th:if="${request.solution != null && #bools.isTrue(request.solution.approved)}" class="col-3 text-success">Заявка одобрена</div>
         <div th:if="${request.solution == null || request.solution != null && #bools.isFalse(request.solution.approved)}" class="col-3 text-danger">Заявка не одобрена</div>
         <div class="col-2">

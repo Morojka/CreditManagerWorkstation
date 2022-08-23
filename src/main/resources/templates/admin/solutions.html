@@ -7,7 +7,7 @@
 </div>
 <div class="container mt-5 text-center">
     <div class="row my-2" th:each="request: ${requests}">
-        <div th:text="${request.getFullName()}" class="col-3 my-auto text-center border-right border-dark"/>
+        <div th:text="${request.getFull_name()}" class="col-3 my-auto text-center border-right border-dark"/>
         <div class="col my-auto border-right border-dark" th:if="${#bools.isTrue(request.solution.approved)}">
             <div class="row">
                 <div class="col-12 text-success">Заявка одобрена</div>
