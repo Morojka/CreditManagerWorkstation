@@ -28,7 +28,7 @@
             <p class="form-control-plaintext py-0">Номер телефона</p>
             <input type="text" th:field="*{phone_number}" name="phoneNumber" id="phoneNumber" class="form-control my-2" placeholder="Номер телефона" required="">
             <p class="form-control-plaintext py-0">Данные о трудоустройстве</p>
-            <textarea th:field="*{employment_status}" name="employmentStatus" id="employmentStatus" class="form-control my-2" required="" placeholder="Введите данные о своем трудоустройстве..."></textarea>
+            <textarea th:field="*{employment_status}" name="employmentStatus" id="employmentStatus" class="form-control my-2" required="" placeholder="Период работы, должность, название организации..."></textarea>
             <p class="form-control-plaintext py-0">Желаемая сумма кредита</p>
             <input type="number" min="1" th:field="*{wish_credit_amount}" name="wishCreditAmount" id="wishCreditAmount" class="form-control my-2" placeholder="Желаемая сумма кредита в рублях" required="">
             <p class="form-control-plaintext py-0 text-danger" th:if="${#fields.hasAnyErrors()}">При заполнении заявки была допущена ошибка, проверьте все и попробуйте снова.</p>

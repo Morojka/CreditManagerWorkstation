@@ -116,4 +116,12 @@ public class RequestController {
             return new ModelAndView("request-success");
         }
     }
+
+    @GetMapping("/admin/requests")
+    public ModelAndView showRequests(Model model) {
+        List<Request> requests = requestRepository.getAll();
+
+        model.addAttribute("requests", requests);
+        return new ModelAndView("admin/requests");
+    }
 }

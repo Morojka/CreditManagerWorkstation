@@ -35,8 +35,11 @@ public class Request {
     @Min(1)
     private Integer wish_credit_amount;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "request")
     private Solution solution;
+
+    public String getFullName() {
+        return this.last_name + " " + this.first_name + " " + this.patronymic;
+    }
 
 }

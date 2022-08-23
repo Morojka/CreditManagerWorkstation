@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="head :: head"></div>
+<body>
+<div class="container">
+  <div th:replace="header :: header"></div>
+</div>
+<div class="container mt-5 text-center">
+    <div class="row my-2" th:each="request: ${requests}">
+        <div th:text="${request.getFullName()}" class="col-3 my-auto text-center border-right border-dark"/>
+        <div class="col my-auto border-right border-dark" th:if="${#bools.isTrue(request.solution.approved)}">
+            <div class="row">
+                <div class="col-12 text-success">Заявка одобрена</div>
+                <div th:text="${'Кредит рассчитан на: ' + request.solution.days_amount / 30 + ' мес. (' + request.solution.days_amount + ' дней)'}" class="col-12"/>
+                <div th:text="${'Сумма кредита: ' + request.solution.credit_amount + ' рублей'}" class="col-12"/>
+            </div>
+        </div>
+        <div class="col my-auto border-right border-dark" th:if="${#bools.isFalse(request.solution.approved)}">
+            <p class="text-danger my-0">Заявка не одобрена</p>
+        </div>
+        <div th:if="${#bools.isTrue(request.solution.signed)}"
+             th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"
+             class="col-auto my-auto border-right border-dark"/>
+        <div th:if="${#bools.isFalse(request.solution.signed)}"
+             th:text="${'Кредитный договор не подписан'}" class="col-auto my-auto border-right border-dark"/>
+        <div class="col-2 my-auto">
+            <a class="btn btn-outline-primary" th:href="${'/request/' + request.id }">Посмотреть заявку</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

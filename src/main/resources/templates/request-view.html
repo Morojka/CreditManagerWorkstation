@@ -6,25 +6,25 @@
         <div th:replace="header :: header"></div>
     </div>
     <div class="container mt-5 px-5">
-        <p class="form-control-plaintext py-1" th:text="${'Фамилия: ' + request.last_name}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Имя: ' + request.first_name}"></p>
-        <p class="form-control-plaintext py-0" th:if="${request.patronymic}" th:text="${'Отчество: ' + request.patronymic}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Паспортные данные: ' + request.passport}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Семейное положение: ' + request.marital_status.getName()}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Адрес проживания: ' + request.address}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Номер телефона: ' + request.phone_number}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Данные о трудоустройстве: ' + request.employment_status}"></p>
-        <p class="form-control-plaintext py-0" th:text="${'Желаемая сумма кредита: ' + request.wish_credit_amount}"></p>
+        <p class="form-control-plaintext py-1" th:text="${'Фамилия: ' + request.last_name}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Имя: ' + request.first_name}"/>
+        <p class="form-control-plaintext py-0" th:if="${request.patronymic}" th:text="${'Отчество: ' + request.patronymic}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Паспортные данные: ' + request.passport}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Семейное положение: ' + request.marital_status.getName()}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Адрес проживания: ' + request.address}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Номер телефона: ' + request.phone_number}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Данные о трудоустройстве: ' + request.employment_status}"/>
+        <p class="form-control-plaintext py-0" th:text="${'Желаемая сумма кредита: ' + request.wish_credit_amount}"/>
         <th:block th:if="${request.solution != null}">
             <p class="form-control-plaintext py-0 mt-5">Решение вынесенное по данной заявке:</p>
             <th:block th:if="${#bools.isTrue(request.solution.approved)}">
                 <p class="form-control-plaintext alert alert-success">Заявка одобрена.</p>
                 <p class="form-control-plaintext py-0"
-                   th:text="${'Кредит рассчитан на: ' + request.solution.days_amount / 30 + ' мес. (' + request.solution.days_amount + ' дней)'}"></p>
-                <p class="form-control-plaintext py-0" th:text="${'Сумма кредита: ' + request.solution.credit_amount + ' рублей'}"></p>
+                   th:text="${'Кредит рассчитан на: ' + request.solution.days_amount / 30 + ' мес. (' + request.solution.days_amount + ' дней)'}"/>
+                <p class="form-control-plaintext py-0" th:text="${'Сумма кредита: ' + request.solution.credit_amount + ' рублей'}"/>
                 <th:block th:if="${request.solution.sign_date != null && #bools.isTrue(request.solution.signed)}">
                     <p class="form-control-plaintext alert alert-success mt-3"
-                       th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"></p>
+                       th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"/>
                 </th:block>
                 <p class="form-control-plaintext py-0"
                    th:if="${request.solution.sign_date == null || request.solution.signed == null || #bools.isFalse(request.solution.signed)}">Кредитный договор еще не подписан.</p>
