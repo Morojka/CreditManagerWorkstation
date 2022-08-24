@@ -2,40 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="head :: head"></head>
 <body>
-    <div class="container">
-        <div th:replace="header :: header"></div>
-    </div>
-    <div class="container mt-5 px-5">
-        <p class="form-control-plaintext py-1" th:text="${'Ф.И.О.: ' + request.full_name}"/>
-        <p class="form-control-plaintext py-0" th:text="${'Паспортные данные: ' + request.passport}"/>
-        <p class="form-control-plaintext py-0" th:text="${'Семейное положение: ' + request.marital_status.getName()}"/>
-        <p class="form-control-plaintext py-0" th:text="${'Адрес проживания: ' + request.address}"/>
-        <p class="form-control-plaintext py-0" th:text="${'Номер телефона: ' + request.phone_number}"/>
-        <p class="form-control-plaintext py-0" th:text="${'Данные о трудоустройстве: ' + request.employment_status}"/>
-        <p class="form-control-plaintext py-0" th:text="${'Желаемая сумма кредита: ' + request.wish_credit_amount}"/>
-        <th:block th:if="${request.solution != null}">
-            <p class="form-control-plaintext py-0 mt-5">Решение вынесенное по данной заявке:</p>
-            <th:block th:if="${#bools.isTrue(request.solution.approved)}">
-                <p class="form-control-plaintext alert alert-success">Заявка одобрена.</p>
-                <p class="form-control-plaintext py-0"
-                   th:text="${'Кредит рассчитан на: ' + request.solution.days_amount / 30 + ' мес. (' + request.solution.days_amount + ' дней)'}"/>
-                <p class="form-control-plaintext py-0" th:text="${'Сумма кредита: ' + request.solution.credit_amount + ' рублей'}"/>
-                <th:block th:if="${request.solution.sign_date != null && #bools.isTrue(request.solution.signed)}">
-                    <p class="form-control-plaintext alert alert-success mt-3"
-                       th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"/>
-                </th:block>
-                <th:block th:if="${request.solution.sign_date == null || request.solution.signed == null || #bools.isFalse(request.solution.signed)}">
-                    <p class="form-control-plaintext py-0">Кредитный договор еще не подписан.</p>
-                    <form  sec:authorize="hasAuthority('USER')" th:action="${'/sign-request/' + request.id}" th:method="post">
-                        <button class="btn btn-outline-success"  type="submit">Подписать кредитный договор</button>
-                    </form>
-                </th:block>
+<div class="container">
+    <div th:replace="header :: header"></div>
+</div>
+<div class="container mt-5 px-5">
+    <p class="form-control-plaintext py-1" th:text="${'Ф.И.О.: ' + request.full_name}"/>
+    <p class="form-control-plaintext py-0" th:text="${'Паспортные данные: ' + request.passport}"/>
+    <p class="form-control-plaintext py-0" th:text="${'Семейное положение: ' + request.marital_status.getName()}"/>
+    <p class="form-control-plaintext py-0" th:text="${'Адрес проживания: ' + request.address}"/>
+    <p class="form-control-plaintext py-0" th:text="${'Номер телефона: ' + request.phone_number}"/>
+    <p class="form-control-plaintext py-0" th:text="${'Данные о трудоустройстве: ' + request.employment_status}"/>
+    <p class="form-control-plaintext py-0" th:text="${'Желаемая сумма кредита: ' + request.wish_credit_amount}"/>
+    <th:block th:if="${request.solution != null}">
+        <p class="form-control-plaintext py-0 mt-5">Решение вынесенное по данной заявке:</p>
+        <th:block th:if="${#bools.isTrue(request.solution.approved)}">
+            <p class="form-control-plaintext alert alert-success">Заявка одобрена.</p>
+            <p class="form-control-plaintext py-0"
+               th:text="${'Кредит рассчитан на: ' + request.solution.days_amount / 30 + ' мес. (' + request.solution.days_amount + ' дней)'}"/>
+            <p class="form-control-plaintext py-0"
+               th:text="${'Сумма кредита: ' + request.solution.credit_amount + ' рублей'}"/>
+            <th:block th:if="${request.solution.sign_date != null && #bools.isTrue(request.solution.signed)}">
+                <p class="form-control-plaintext alert alert-success mt-3"
+                   th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"/>
             </th:block>
-            <p class="form-control-plaintext text-danger py-0" th:if="${#bools.isFalse(request.solution.approved)}">
-                Заявка не одобрена.
-            </p>
+            <th:block
+                    th:if="${request.solution.sign_date == null || request.solution.signed == null || #bools.isFalse(request.solution.signed)}">
+                <p class="form-control-plaintext py-0">Кредитный договор еще не подписан.</p>
+                <form sec:authorize="hasAuthority('USER')" th:action="${'/sign-request/' + request.id}"
+                      th:method="post">
+                    <button class="btn btn-outline-success" type="submit">Подписать кредитный договор</button>
+                </form>
+            </th:block>
         </th:block>
-        <p th:if="${request.solution == null}" class="mt-3 alert alert-info">По данной заявке решение еще не вынесено.</p>
-    </div>
+        <p class="form-control-plaintext text-danger py-0" th:if="${#bools.isFalse(request.solution.approved)}">
+            Заявка не одобрена.
+        </p>
+    </th:block>
+    <p th:if="${request.solution == null}" class="mt-3 alert alert-info">По данной заявке решение еще не вынесено.</p>
+</div>
 </body>
 </html>

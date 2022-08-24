@@ -1,21 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace="head :: head"></div>
-    <body>
-        <div class="container">
-            <div th:replace="header :: header"></div>
-        </div>
-        <div class="container mt-5 text-center">
-            <a th:href="@{/create-request}" sec:authorize="!isAuthenticated()"
-               class="btn btn-lg btn-success m-auto p-4">Подать заявку на кредит</a>
-            <a th:if="${request != null && request.id != null}" th:href="${'/request/' + request.id}"
-               class="btn btn-lg btn-success m-auto p-4">Просмотреть свою заявку</a>
-            <a th:href="@{/admin/clients}" sec:authorize="hasAuthority('ADMIN')"
-               class="btn btn-lg btn-success m-auto p-4">Посмотреть клиентов</a>
-            <a th:href="@{/admin/requests}" sec:authorize="hasAuthority('ADMIN')"
-               class="btn btn-lg btn-success m-auto p-4">Посмотреть заявки</a>
-            <a th:href="@{/admin/solutions}" sec:authorize="hasAuthority('ADMIN')"
-               class="btn btn-lg btn-success m-auto p-4">Посмотреть решения</a>
-        </div>
-    </body>
+<body>
+<div class="container">
+    <div th:replace="header :: header"></div>
+</div>
+<div class="container mt-5 text-center">
+    <a th:href="@{/create-request}" sec:authorize="!isAuthenticated()"
+       class="btn btn-lg btn-success m-auto p-4">Подать заявку на кредит</a>
+    <a th:if="${request != null && request.id != null}" th:href="${'/request/' + request.id}"
+       class="btn btn-lg btn-success m-auto p-4">Просмотреть свою заявку</a>
+    <a th:href="@{/admin/clients}" sec:authorize="hasAuthority('ADMIN')"
+       class="btn btn-lg btn-success m-auto p-4">Посмотреть клиентов</a>
+    <a th:href="@{/admin/requests}" sec:authorize="hasAuthority('ADMIN')"
+       class="btn btn-lg btn-success m-auto p-4">Посмотреть заявки</a>
+    <a th:href="@{/admin/solutions}" sec:authorize="hasAuthority('ADMIN')"
+       class="btn btn-lg btn-success m-auto p-4">Посмотреть решения</a>
+</div>
+</body>
 </html>
