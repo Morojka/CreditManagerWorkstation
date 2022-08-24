@@ -1,15 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-    <div th:replace="head :: head"></div>
-    <body>
-        <div class="container">
-            <form style="max-width: 400px" class="form-signin mx-auto" method="post" th:action="@{'/login'}">
-                <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
-                <input type="text" name="username" id="username" class="form-control my-2" placeholder="Логин" required="" autofocus="">
-                <input type="password" name="password" id="password" class="form-control my-2" placeholder="Пароль" required="">
-                <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Войти</button>
-                <a th:href="@{'/'}" class="btn btn-outline-primary btn-block">Вернуться на главную</a>
-            </form>
-        </div>
-    </body>
+<div th:replace="head :: head"></div>
+<body>
+<div class="container">
+    <form style="max-width: 400px" class="form-signin mx-auto" method="post" th:action="@{'/login'}">
+        <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
+        <input type="text" name="username" id="username" class="form-control my-2" placeholder="Логин" required=""
+               autofocus="">
+        <input type="password" name="password" id="password" class="form-control my-2" placeholder="Пароль" required="">
+        <button class="btn btn-lg btn-primary btn-block my-2" type="submit">Войти</button>
+        <a th:href="@{'/'}" class="btn btn-outline-primary btn-block">Вернуться на главную</a>
+    </form>
+</div>
+</body>
 </html>

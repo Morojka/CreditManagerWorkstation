@@ -1,6 +1,7 @@
 package com.arm.CreditManagerWorkstation.model;
 
 import lombok.Data;
+
 import javax.persistence.*;
 
 @Data
