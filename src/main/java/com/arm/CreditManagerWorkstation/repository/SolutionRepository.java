@@ -30,6 +30,8 @@ public class SolutionRepository {
         session.getSession().save(solution);
     }
 
+    //Transactional annotation prevents race condition
+    //it happens without it
     @Transactional
     public void update(Solution solution) {
         Session session = entityManager.unwrap(Session.class);

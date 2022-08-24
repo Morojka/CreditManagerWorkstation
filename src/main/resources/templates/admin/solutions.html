@@ -20,9 +20,9 @@
         </div>
         <div th:if="${#bools.isTrue(request.solution.signed)}"
              th:text="${'Кредитный договор подписан: ' + #dates.format(request.solution.sign_date, 'dd.MM.yyyy')}"
-             class="col-auto my-auto border-right border-dark"/>
+             class="col-3 my-auto border-right border-dark"/>
         <div th:if="${#bools.isFalse(request.solution.signed)}"
-             th:text="${'Кредитный договор не подписан'}" class="col-auto my-auto border-right border-dark"/>
+             th:text="${'Кредитный договор не подписан'}" class="col-3 my-auto border-right border-dark"/>
         <div class="col-2 my-auto">
             <a class="btn btn-outline-primary" th:href="${'/request/' + request.id }">Посмотреть заявку</a>
         </div>

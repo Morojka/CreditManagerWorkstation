@@ -24,7 +24,6 @@ public class RequestRepository {
         return session.getSession().createQuery("FROM Request where id = :query", Request.class).setParameter("query", query).getSingleResult();
     }
 
-    @Transactional
     public List<Request> searchByName(String search) {
         Session session = entityManager.unwrap(Session.class);
         String query = "%" + search + "%";
@@ -32,7 +31,7 @@ public class RequestRepository {
                 .setParameter("query", query)
                 .getResultList();
     }
-    @Transactional
+
     public List<Request> searchByPassport(String search) {
         Session session = entityManager.unwrap(Session.class);
         String query = "%" + search + "%";
@@ -40,7 +39,7 @@ public class RequestRepository {
                 .setParameter("query", query)
                 .getResultList();
     }
-    @Transactional
+
     public List<Request> searchByPhone(String search) {
         Session session = entityManager.unwrap(Session.class);
         String query = "%" + search + "%";

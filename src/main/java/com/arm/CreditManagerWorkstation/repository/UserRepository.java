@@ -18,12 +18,16 @@ public class UserRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    //Transactional annotation prevents race condition
+    //it happens without it
     @Transactional
     public User findByLogin(@Param("user") String query) {
         Session session = entityManager.unwrap(Session.class);
         return session.getSession().createQuery("FROM User where login = :query", User.class).setParameter("query", query).getSingleResult();
     }
 
+    //Transactional annotation prevents race condition
+    //it happens without it
     @Transactional
     public void save(User user) {
         Session session = entityManager.unwrap(Session.class);
